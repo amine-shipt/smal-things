@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails du Film/Série</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap">
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Effet de fond cinématographique */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)), url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+            z-index: -1;
+            animation: flicker 5s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.9;
+            }
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 10%;
+            background-color: rgba(0, 0, 0, 0.8);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .navbar .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff0a16;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #ff0a16, 0 0 20px #ff0a16, 0 0 30px #ff0a16;
+            }
+            to {
+                text-shadow: 0 0 20px #ff0a16, 0 0 40px #ff0a16, 0 0 60px #ff0a16;
+            }
+        }
+
+        .navbar .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .navbar .nav-links li {
+            margin-left: 30px;
+        }
+
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover {
+            color: #ff0a16;
+            transform: scale(1.1);
+        }
+
+        /* Détails du Film/Série */
+        .details-container {
+            padding: 120px 10% 50px;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+
+        .details-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .details-content h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            text-align: center;
+            background: linear-gradient(90deg, #ff0a16, #ff8a00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .details-content .video-player {
+            width: 100%;
+            max-width: 800px;
+            height: 450px;
+            background: #000;
+            border: 2px solid #ff0a16;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .details-content .video-player iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .details-content .info {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .details-content .info p {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .details-content .info p span {
+            font-weight: bold;
+            color: #ff0a16;
+        }
+
+        .details-content .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .details-content .gallery img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .details-content .gallery img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255, 10, 22, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 10%;
+            background-color: rgba(0, 0, 0, 0.9);
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        footer p {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        footer a {
+            color: #ff0a16;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #ff8a00;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .details-content h1 {
+                font-size: 2rem;
+            }
+
+            .details-content .video-player {
+                height: 300px;
+            }
+
+            .details-content .info p {
+                font-size: 1rem;
+            }
+
+            .details-content .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .details-content h1 {
+                font-size: 1.5rem;
+            }
+
+            .details-content .video-player {
+                height: 200px;
+            }
+
+            .details-content .info p {
+                font-size: 0.9rem;
+            }
+
+            .details-content .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Cinéma Épique</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Accueil</a></li>
+            <li><a href="#films">Films</a></li>
+            <li><a href="#series">Séries</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Détails du Film/Série -->
+    <section class="details-container">
+        <div class="details-content">
+            <h1 id="filmTitle">Titre du Film/Série</h1>
+            <div class="video-player">
+                <iframe id="videoPlayer" src="small.things.like.these.2024.480p.web.WeCima.Show.mp4" allowfullscreen></iframe>
+            </div>
+            <div class="info">
+                <p><span>Date de sortie :</span> <span id="releaseDate">2023</span></p>
+                <p><span>Genre :</span> <span id="genre">Action</span></p>
+                <p><span>Réalisateur :</span> <span id="director">John Doe</span></p>
+                <p><span>Synopsis :</span> <span id="synopsis">Un film épique qui vous transporte dans un autre monde.</span></p>
+            </div>
+            <div class="gallery" id="gallery">
+                <!-- Les images seront injectées ici -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 Cinéma Épique. Tous droits réservés. | <a href="#contact">Contactez-nous</a></p>
+    </footer>
+
+    <script>
+        // Récupérer les données du film/série depuis l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const filmId = urlParams.get('id');
+
+        // Exemple de données (à remplacer par une API ou une base de données)
+        const films = [
+            {
+                id: 1,
+                title: "Avengers: Endgame",
+                releaseDate: "2019",
+                genre: "Action",
+                director: "Anthony et Joe Russo",
+                synopsis: "Les Avengers tentent de vaincre Thanos et de restaurer l'univers.",
+                videoUrl: "https://www.youtube.com/embed/TcMBFSGVi1c",
+                images: [
+                    "https://via.placeholder.com/300x200",
+                    "https://via.placeholder.com/300x200",
+                    "https://via.placeholder.com/300x200"
+                ]
+            },
+            {
+                id: 2,
+                title: "Inception",
+                releaseDate: "2010",
+                genre: "Science-Fiction",
+                director: "Christopher Nolan",
+                synopsis: "Un voleur utilise la technologie pour infiltrer les rêves.",
+                videoUrl: "https://www.youtube.com/embed/YoHD9XEInc0",
+                images: [
+                    "https://via.placeholder.com/300x200",
+                    "https://via.placeholder.com/300x200",
+                    "https://via.placeholder.com/300x200"
+                ]
+            }
+        ];
+
+        // Trouver le film correspondant
+        const film = films.find(f => f.id == filmId);
+
+        // Afficher les détails du film
+        if (film) {
+            document.getElementById('filmTitle').textContent = film.title;
+            document.getElementById('releaseDate').textContent = film.releaseDate;
+            document.getElementById('genre').textContent = film.genre;
+            document.getElementById('director').textContent = film.director;
+            document.getElementById('synopsis').textContent = film.synopsis;
+            document.getElementById('videoPlayer').src = film.videoUrl;
+
+            // Afficher les images
+            const gallery = document.getElementById('gallery');
+            film.images.forEach(image => {
+                const img = document.createElement('img');
+                img.src = image;
+                gallery.appendChild(img);
+            });
+        } else {
+            document.getElementById('filmTitle').textContent = "Film non trouvé";
+        }
+    </script>
+</body>
+</html>
